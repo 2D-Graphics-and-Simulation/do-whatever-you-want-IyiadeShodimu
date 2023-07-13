@@ -22,8 +22,9 @@ function onLoad() {
         originMatrix = Matrix.createTranslation(originVector);
         
         boatPosition = new Vector(0, 0, 1);
+        let boatRotation = Math.PI;
         boats = []
-        boats.push(new Boat(boatPosition));
+        boats.push(new Boat(boatPosition, boatRotation));
 
     }
     // this function will actually draw on the canvas
