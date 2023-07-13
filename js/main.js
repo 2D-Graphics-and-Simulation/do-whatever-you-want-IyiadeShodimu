@@ -23,7 +23,7 @@ function onLoad() {
         
         boatPosition = new Vector(0, 0, 1);
         boats = []
-        boats.push(new boat(boatPosition));
+        boats.push(new Boat(boatPosition));
 
     }
     // this function will actually draw on the canvas
