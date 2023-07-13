@@ -1,6 +1,6 @@
 // the window load event handler
 function onLoad() {
-    var mainCanvas, mainContext, housePosition, houses, originMatrix;
+    var mainCanvas, mainContext, boatPosition, boats, originMatrix;
     // This function will initialise our variables
     function initialiseCanvasContext() {
         // Find the canvas element using its id attribute.
@@ -21,22 +21,22 @@ function onLoad() {
         originVector = originVector.multiply(0.5);
         originMatrix = Matrix.createTranslation(originVector);
         
-        housePosition = new Vector(0, 0, 1);
-        houses = []
-        houses.push(new House(housePosition));
+        boatPosition = new Vector(0, 0, 1);
+        boats = []
+        boats.push(new boat(boatPosition));
 
     }
     // this function will actually draw on the canvas
     function draw() {
         var i;
-        mainContext.fillStyle = "#add8e6";
-        // fill the canvas with light blue
+        mainContext.fillStyle = "#808080";
+        // fill the canvas with grey
         mainContext.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
         mainContext.lineWidth = 5;
         mainContext.lineJoin = 'round' ;
         originMatrix.setTransform(mainContext);     
-        for (i = 0; i < houses.length; i+=1){
-            houses[i].draw(mainContext, originMatrix);
+        for (i = 0; i < boats.length; i+=1){
+            boats[i].draw(mainContext, originMatrix);
         }
     }
 
