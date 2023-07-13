@@ -1,7 +1,8 @@
 class Boat {
-    constructor(pPosition, pRotation){
+    constructor(pPosition, pRotation, pScale){
          this.setPosition(pPosition);
          this.setRotation(pRotation);
+         this.setScale(pScale);
     }
 
 getPosition() {
@@ -15,6 +16,12 @@ getRotation() {
 }
 setRotation(pRotation) {
     this.mRotation = pRotation;
+}
+getScale() {
+    return this.mScale;
+}
+setScale(pScale) {
+    this.mScale = pScale;
 }
 drawHull(pContext, pWorldMatrix){
     let localTranslation = Matrix.createTranslation(new Vector(0, 0, 1));
@@ -85,6 +92,8 @@ draw(pContext, pWorldMatrix) {
     let transform = pWorldMatrix.multiply(localTranslation);
     let localRotation = Matrix.createRotation(this.getRotation());
     transform = transform.multiply(localRotation);
+    let localScale = Matrix.createScale(this.getScale());
+    transform = transform.multiply(localScale);
     transform.setTransform(pContext);
     this.drawHull(pContext, transform);  
     this.drawFlag(pContext, transform);    
