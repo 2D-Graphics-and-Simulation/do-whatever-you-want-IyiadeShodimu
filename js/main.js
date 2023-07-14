@@ -1,6 +1,6 @@
 // the window load event handler
 function onLoad() {
-    var mainCanvas, mainContext, boatPosition, boats, originMatrix, star, starPosition;
+    var mainCanvas, mainContext, boatPosition, drawables, originMatrix, star, starPosition;
     // This function will initialise our variables
     function initialiseCanvasContext() {
         // Find the canvas element using its id attribute.
@@ -21,17 +21,17 @@ function onLoad() {
         originVector = originVector.multiply(0.5);
         originMatrix = Matrix.createTranslation(originVector);
         
-        boatPosition = new Vector(-50, 100, 1);
+        boatPosition = new Vector(-100, 0, 1);
         let boatRotation = 0;
         let boatScale = new Vector(1, 1, 1);
-        boats = [];
-        boats.push(new Boat(boatPosition, boatRotation, boatScale));
+        drawables = [];
+        drawables.push(new Boat(boatPosition, boatRotation, boatScale));
 
-        starPosition = new Vector(300, -150, 1);
+        starPosition = new Vector(300, -200, 1);
         star = [];
         let starRotation = 0;
-        let starScale = new Vector(1, 1, 1);
-        boats.push(new Star(starPosition, starRotation, starScale))
+        let starScale = new Vector(0.5, 0.5, 1);
+        drawables.push(new Star(starPosition, starRotation, starScale))
 
     }
     // this function will actually draw on the canvas
@@ -42,9 +42,9 @@ function onLoad() {
         mainContext.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
         mainContext.lineWidth = 5;
         mainContext.lineJoin = 'round' ;
-        originMatrix.setTransform(mainContext);     
-        for (i = 0; i < boats.length; i+=1){
-            boats[i].draw(mainContext, originMatrix);
+        //originMatrix.setTransform(mainContext);     
+        for (i = 0; i < drawables.length; i+=1){
+            drawables[i].draw(mainContext, originMatrix);
         }
     }
 

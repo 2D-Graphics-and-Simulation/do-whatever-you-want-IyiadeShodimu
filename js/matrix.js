@@ -73,12 +73,12 @@ class Matrix {
         var Z2 = ((pMatrix.getElement(0, 2) * this.getElement(1, 0))+(pMatrix.getElement(1, 2) * this.getElement(1, 1)) + (pMatrix.getElement(2, 2) * this.getElement(1, 2)));
         var Z3 = ((pMatrix.getElement(0, 2) * this.getElement(2, 0))+(pMatrix.getElement(1, 2) * this.getElement(2, 1)) + (pMatrix.getElement(2, 2) * this.getElement(2, 2)));
 
-        return new Matrix(X1, Y1, Z1, X1, Y2, Z2, X3, Y3, Z3);
+        return new Matrix(X1, Y1, Z1, X2, Y2, Z2, X3, Y3, Z3);
     }
     multiplyVector(pVector){
-        var X = ((this.getElement(0, 0) * pVector.getX()) + (this.getElement(0, 1) * pVector.getX()) + (this.getElement(0, 2) * pVector.getX()));
-        var Y = ((this.getElement(1, 0) * pVector.getY()) + (this.getElement(1, 1) * pVector.getY()) + (this.getElement(1, 2) * pVector.getY()));
-        var Z = ((this.getElement(2, 0) * pVector.getZ()) + (this.getElement(2, 1) * pVector.getZ()) + (this.getElement(2, 2) * pVector.getZ()));
+        var X = ((this.getElement(0, 0) * pVector.getX()) + (this.getElement(0, 1) * pVector.getY()) + (this.getElement(0, 2) * pVector.getZ()));
+        var Y = ((this.getElement(1, 0) * pVector.getX()) + (this.getElement(1, 1) * pVector.getY()) + (this.getElement(1, 2) * pVector.getZ()));
+        var Z = ((this.getElement(2, 0) * pVector.getX()) + (this.getElement(2, 1) * pVector.getY()) + (this.getElement(2, 2) * pVector.getZ()));
         return new Vector(X, Y, Z);
     }
     setTransform(pContext){

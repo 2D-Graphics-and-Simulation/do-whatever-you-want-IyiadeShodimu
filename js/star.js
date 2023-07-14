@@ -29,11 +29,16 @@ drawStar(pContext, pWorldMatrix){
     transform.setTransform(pContext);
     pContext.beginPath();
     pContext.fillStyle = "#c0c0c0";
-    pContext.moveTo(0, -120);
-    pContext.lineTo(-30, 0);
-    pContext.lineTo(40, -130);
-    pContext.lineTo(-40, -50);
-    pContext.lineTo(30, -60);
+    pContext.moveTo(0, -100);
+    pContext.lineTo(-20, -25);
+    pContext.lineTo(-100, -40);
+    pContext.lineTo(-25, 13);
+    pContext.lineTo(-75, 85);
+    pContext.lineTo(0, 30);
+    pContext.lineTo(75, 85);
+    pContext.lineTo(25, 13);
+    pContext.lineTo(100, -40);
+    pContext.lineTo(20, -25);
     pContext.closePath();
     pContext.fill()
     pContext.stroke();
