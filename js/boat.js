@@ -3,6 +3,7 @@ class Boat {
          this.setPosition(pPosition);
          this.setRotation(pRotation);
          this.setScale(pScale);
+         this.setRotationRate(Math.PI/6)
          this.beginSceneGraph();
     }
 
@@ -18,6 +19,12 @@ getRotation() {
 setRotation(pRotation) {
     this.mRotation = pRotation;
 }
+getRotationRate() {
+    return this.mRotationRate;
+}
+setRotationRate(pRotationRate) {
+    this.mRotationRate = pRotationRate;
+}
 getScale() {
     return this.mScale;
 }
@@ -30,12 +37,19 @@ getSceneGraphRoot(){
 setSceneGraphRoot(pSceneGraphNode){
     this.mRootNode = pSceneGraphNode;
 }
+getSceneGraphRotationNode(){
+    return this.mRotationNode;
+}
+setSceneGraphRotationNode(pRotationNode){
+    this.mRotationNode = pRotationNode;
+}
 beginSceneGraph(){
     let localTranslation = Matrix.createTranslation(this.getPosition());
     let localRotation = Matrix.createRotation(this.getRotation());
     let localScale = Matrix.createScale(this.getScale());
     let localTranslationNode = new SceneGraphNode(localTranslation);
     let localRotationNode = new SceneGraphNode(localRotation);
+    this.setSceneGraphRotationNode(localRotationNode);
     let localScaleNode = new SceneGraphNode(localScale);
     localTranslationNode.addChild(localRotationNode);
     localRotationNode.addChild(localScaleNode);
@@ -67,36 +81,45 @@ beginSceneGraph(){
     let waterTranslation = Matrix.createTranslation(new Vector(0, 0, 1));
     let waterTranslationNode = new SceneGraphNode(waterTranslation);
     localScaleNode.addChild(waterTranslationNode);
-    // vertices = [];
-    // vertices.add(new Vector(-500, 0, 1));
-    // vertices.add(new Vector(-450, +50, 1));
-    // vertices.add(new Vector(-400, 0, 1));
-    // vertices.add(new Vector(-350, +50, 1));
-    // vertices.add(new Vector(-300, 0, 1));
-    // vertices.add(new Vector(-250, +50, 1));
-    // vertices.add(new Vector(-200, 0, 1));
-    // vertices.add(new Vector(-150, +50, 1));
-    // vertices.add(new Vector(-100, 0, 1));
-    // vertices.add(new Vector(-50, +50, 1));
-    // vertices.add(new Vector(0, 0, 1));
-    // vertices.add(new Vector(+50, +50, 1));
-    // vertices.add(new Vector(+100, 0, 1));
-    // vertices.add(new Vector(+150, +50, 1));
-    // vertices.add(new Vector(+200, 0, 1));
-    // vertices.add(new Vector(+250, +50, 1));
-    // vertices.add(new Vector(+300, 0, 1));
-    // vertices.add(new Vector(+350, +50, 1));
-    // vertices.add(new Vector(+400, 0, 1));
-    // vertices.add(new Vector(+450, +50, 1));
-    // vertices.add(new Vector(+500, 0, 1));
-    // vertices.add(new Vector(+500, +50, 1));
-    // vertices.add(new Vector(+500, +500, 1));
-    // vertices.add(new Vector(-500, +500, 1));
-    // vertices.add(new Vector(-500, 0, 1));
-    let water = new Water();
+    vertices = [];
+    vertices.push(new Vector(-500, 0, 1));
+    vertices.push(new Vector(-450, +50, 1));
+    vertices.push(new Vector(-400, 0, 1));
+    vertices.push(new Vector(-350, +50, 1));
+    vertices.push(new Vector(-300, 0, 1));
+    vertices.push(new Vector(-250, +50, 1));
+    vertices.push(new Vector(-200, 0, 1));
+    vertices.push(new Vector(-150, +50, 1));
+    vertices.push(new Vector(-100, 0, 1));
+    vertices.push(new Vector(-50, +50, 1));
+    vertices.push(new Vector(0, 0, 1));
+    vertices.push(new Vector(+50, +50, 1));
+    vertices.push(new Vector(+100, 0, 1));
+    vertices.push(new Vector(+150, +50, 1));
+    vertices.push(new Vector(+200, 0, 1));
+    vertices.push(new Vector(+250, +50, 1));
+    vertices.push(new Vector(+300, 0, 1));
+    vertices.push(new Vector(+350, +50, 1));
+    vertices.push(new Vector(+400, 0, 1));
+    vertices.push(new Vector(+450, +50, 1));
+    vertices.push(new Vector(+500, 0, 1));
+    vertices.push(new Vector(+500, +50, 1));
+    vertices.push(new Vector(+500, +500, 1));
+    vertices.push(new Vector(-500, +500, 1));
+    vertices.push(new Vector(-500, 0, 1));
+    let water = new Polygon(vertices, '#add8e6')
+    // let water = new Water();
     waterTranslationNode.addChild(water);
 
 
     this.setSceneGraphRoot(localTranslationNode);
+}
+update(pDeltaTime){
+    let currentRotationDelta = this.getRotationRate() * pDeltaTime;
+    let newRotation = this.getRotation() + currentRotationDelta;
+    this.setRotation(newRotation);
+    let rotationNode = this.getSceneGraphRotationNode();
+    let newRotationMatrix = Matrix.createRotation(newRotation);
+    rotationNode.setLocalTransformation(newRotationMatrix);
 }
 }

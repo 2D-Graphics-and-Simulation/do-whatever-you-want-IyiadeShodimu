@@ -21,7 +21,7 @@ class SceneGraphNode{
     draw(pContext, pWorldMatrix){
         let transform = pWorldMatrix.multiply(this.getLocalTransformation());
         transform.setTransform(pContext);
-        for(let i = 0; i < this.getNumberOfChildren(); i+=1){
+        for(let i = 0; i < this.getNumberOfChildren(); i += 1){
             let child = this.getChild(i);
             child.draw(pContext, transform);
         }

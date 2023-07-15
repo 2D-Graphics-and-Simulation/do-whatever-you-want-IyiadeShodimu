@@ -3,6 +3,7 @@ class Star {
          this.setPosition(pPosition);
          this.setRotation(pRotation);
          this.setScale(pScale);
+         this.beginSceneGraph();
     }
 
 getPosition() {
@@ -23,36 +24,40 @@ getScale() {
 setScale(pScale) {
     this.mScale = pScale;
 }
-drawStar(pContext, pWorldMatrix){
-    let localTranslation = Matrix.createTranslation(new Vector(0, 0, 1));
-    let transform = pWorldMatrix.multiply(localTranslation);
-    transform.setTransform(pContext);
-    pContext.beginPath();
-    pContext.fillStyle = "#c0c0c0";
-    pContext.moveTo(0, -100);
-    pContext.lineTo(-20, -25);
-    pContext.lineTo(-100, -40);
-    pContext.lineTo(-25, 13);
-    pContext.lineTo(-75, 85);
-    pContext.lineTo(0, 30);
-    pContext.lineTo(75, 85);
-    pContext.lineTo(25, 13);
-    pContext.lineTo(100, -40);
-    pContext.lineTo(20, -25);
-    pContext.closePath();
-    pContext.fill()
-    pContext.stroke();
-    pWorldMatrix.setTransform(pContext);
+getSceneGraphRoot(){
+    return this.mRootNode;
 }
-    draw(pContext, pWorldMatrix) {
+setSceneGraphRoot(pSceneGraphNode){
+    this.mRootNode = pSceneGraphNode;
+}
+beginSceneGraph(){
     let localTranslation = Matrix.createTranslation(this.getPosition());
-    let transform = pWorldMatrix.multiply(localTranslation);
     let localRotation = Matrix.createRotation(this.getRotation());
-    transform = transform.multiply(localRotation);
     let localScale = Matrix.createScale(this.getScale());
-    transform = transform.multiply(localScale);
-    transform.setTransform(pContext);
-    this.drawStar(pContext, transform);   
-    pWorldMatrix.setTransform(pContext);
+    let localTranslationNode = new SceneGraphNode(localTranslation);
+    let localRotationNode = new SceneGraphNode(localRotation);
+    let localScaleNode = new SceneGraphNode(localScale);
+    localTranslationNode.addChild(localRotationNode);
+    localRotationNode.addChild(localScaleNode);
+
+    let starTranslation = Matrix.createTranslation(new Vector(0, 0, 1));
+    let starTranslationNode = new SceneGraphNode(starTranslation);
+    localScaleNode.addChild(starTranslationNode);
+    let vertices = [];
+    vertices.push(new Vector(0, -100, 1));
+    vertices.push(new Vector(-20, -25, 1));
+    vertices.push(new Vector(-100, -40, 1));
+    vertices.push(new Vector(-25, +13, 1));
+    vertices.push(new Vector(-75, +85, 1));
+    vertices.push(new Vector(0, +30, 1));
+    vertices.push(new Vector(+75, +85, 1));
+    vertices.push(new Vector(+25, +13, 1));
+    vertices.push(new Vector(+100, -40, 1));
+    vertices.push(new Vector(+20, -25, 1));
+    vertices.push(new Vector(0, -100, 1));
+    let star = new Polygon(vertices, '#ffffff');
+    starTranslationNode.addChild(star);
+
+    this.setSceneGraphRoot(localTranslationNode);
 }
 }
