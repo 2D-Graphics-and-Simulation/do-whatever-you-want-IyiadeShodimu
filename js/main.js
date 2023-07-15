@@ -19,7 +19,7 @@ function onLoad() {
          }
         
         drawables = [];
-        starPosition = new Vector(300, -250, 1);
+        starPosition = new Vector(300, -200, 1);
         let starRotation = 0;
         let starScale = new Vector(0.4, 0.4, 1);
         drawables.push(new Star(starPosition, starRotation, starScale))
@@ -31,7 +31,7 @@ function onLoad() {
         originMatrix = Matrix.createTranslation(originVector);
         rootNode = new SceneGraphNode(originMatrix);
 
-        boatPosition = new Vector(-100, 0, 1);
+        boatPosition = new Vector(0, 0, 1);
         let boatRotation = 0;
         let boatScale = new Vector(1, 1, 1);
         
