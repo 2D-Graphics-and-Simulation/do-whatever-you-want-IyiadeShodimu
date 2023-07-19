@@ -3,7 +3,8 @@ class Boat {
          this.setPosition(pPosition);
          this.setRotation(pRotation);
          this.setScale(pScale);
-         this.setRotationRate(Math.PI/6)
+         this.setRotationRate(Math.PI/6);
+         this.setVelocity(new Vector(20, 10, 1));
          this.beginSceneGraph();
     }
 
@@ -12,6 +13,12 @@ getPosition() {
 }
 setPosition(pPosition) {
     this.mPosition = pPosition;
+}
+getVelocity() {
+    return this.mVelocity;
+}
+setVelocity(pVelocity) {
+    this.mVelocity = pVelocity;
 }
 getRotation() {
     return this.mRotation;
@@ -107,8 +114,7 @@ beginSceneGraph(){
     vertices.push(new Vector(+500, +500, 1));
     vertices.push(new Vector(-500, +500, 1));
     vertices.push(new Vector(-500, 0, 1));
-    let water = new Polygon(vertices, '#add8e6')
-    // let water = new Water();
+    let water = new Polygon(vertices, '#add8e6');
     waterTranslationNode.addChild(water);
 
 
@@ -121,5 +127,12 @@ update(pDeltaTime){
     let rotationNode = this.getSceneGraphRotationNode();
     let newRotationMatrix = Matrix.createRotation(newRotation);
     rotationNode.setLocalTransformation(newRotationMatrix);
+
+    let currentVelocity = this.getVelocity().multiply(pDeltaTime);
+    let newPosition = this.getPosition().add(currentVelocity);
+    this.setPosition(newPosition);
+    let translationNode = this.getSceneGraphRoot();
+    let newTranslationMatrix = Matrix.createTranslation(newPosition);
+    translationNode.setLocalTransformation(newTranslationMatrix); 
 }
 }
