@@ -8,6 +8,7 @@ class Star {
          this.beginSceneGraph();
     }
 
+    
 getPosition() {
     return this.mPosition;
 }
